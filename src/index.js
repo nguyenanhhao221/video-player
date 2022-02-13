@@ -13,17 +13,23 @@ const VIDEOS = {
 class App extends React.Component {
   constructor(props) {
     super(props);
-    // in order to change state we need a function that call setState
-    this.chooseVideo = 
-
+    this.chooseVideo = this.chooseVideo.bind(this); // Bind chooseVideo because it use "this.setState" so need to make sure the "this" is refer to correct instance
     this.state = { src: VIDEOS.fast };
   }
-  
+   // in order to change state we need a function that call setState
+   // newVideo will be passed in the string "fast" , "slow", "cute", "eek" which we will later be selected in Menu component
+   // Base on the value of the string passed in we will update the video src
+   chooseVideo(newVideo) {
+    this.setState(
+        { src: VIDEOS[newVideo] }
+    );
+   }
+
   render() {
     return (
       <div>
         <h1>Video Player</h1>
-        <Menu />
+        <Menu chooseVideo={this.chooseVideo} />
         {/*pass in prop name src with value of App's state, src value */}
         <Video src={this.state.src}/>
       </div>
